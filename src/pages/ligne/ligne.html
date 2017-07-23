@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Lignes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-label>Localisation</ion-label>
+            <ion-select [(ngModel)]="coverage">
+            <ion-option  *ngFor="let coverage of coverages">{{coverage.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label>Moyen de transport</ion-label>
+            <ion-select [(ngModel)]="transport">
+            <ion-option value="rer">RER</ion-option>
+            <ion-option value="metro">Metro</ion-option>
+            <ion-option value="bus">Bus</ion-option>
+            <ion-option value="tramway">Tramway</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+     <button (click)="load()">
+      <ion-icon name="search"></ion-icon>
+     </button>
+     <span class="metro symbole">Ligne J</span>
+
+     <ion-list no-lines>
+      <button ion-item *ngFor="let line of lines" (click)="lineSelected(line)">
+        {{line.name}}
+      </button> 
+    </ion-list>
+
+</ion-content>
