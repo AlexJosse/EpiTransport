@@ -29,13 +29,15 @@
     </ion-list>
      <button (click)="load()">
       <ion-icon name="search"></ion-icon>
-     </button>
+     </button><!--
      <span class="metro symbole">Ligne J</span>
+-->
 
      <ion-list no-lines>
-      <button ion-item *ngFor="let line of lines" (click)="lineSelected(line)">
+      <ion-item *ngFor="let line of lines" (click)="lineSelected(line)">
+        <ion-icon class="{{whichIcon(line)}}" item-start></ion-icon>
         {{line.name}}
-      </button> 
+      </ion-item> 
     </ion-list>
 
 </ion-content>

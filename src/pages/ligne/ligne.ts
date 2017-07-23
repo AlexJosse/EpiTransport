@@ -10,7 +10,7 @@ export class Ligne{
     private transport: string;
     private coverages: Array<{id: string, name: string}>;
     private coverage:  string;
-    private lines: Array<{id: string, numero: string, name: string}>;
+    private lines: Array<{id: string, numero: string, name: string, type: string}>;
 
     constructor(private navitia: NavitiaService){
         this.transport = "metro";
@@ -24,8 +24,9 @@ export class Ligne{
             this.navitia.getListSubway(id).subscribe(
                 data => {
                     this.lines = [];
-                    for (let obj of data){
-                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name});
+                    for (let obj of data.lines){
+                       // this.whichIcon("metro " + obj.code);
+                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name, type: "metro"});
                     }
                 },
                 err => {
@@ -37,7 +38,7 @@ export class Ligne{
                 data => {
                     this.lines = [];
                     for (let obj of data){
-                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name});
+                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name, type: "rer"});
                     }
                 },
                 err => {
@@ -50,7 +51,7 @@ export class Ligne{
                 data => {
                     this.lines = [];
                     for (let obj of data){
-                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name});
+                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name, type: "bus"});
                     }
                 },
                 err => {
@@ -63,7 +64,7 @@ export class Ligne{
                 data => {
                     this.lines = [];
                     for (let obj of data){
-                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name});
+                        this.lines.push({id: obj.id, numero: obj.code, name: obj.name, type: "tramway"});
                     }
                 },
                 err => {
@@ -101,6 +102,11 @@ export class Ligne{
     }
 
     lineSelected(line): void{
+        console.log(line);
         
+    }
+
+    whichIcon(line): string{
+        return (line.type + " ligne" + line.numero).toLowerCase();
     }
 }
