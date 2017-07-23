@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { Ligne } from '../pages/ligne/ligne';
+import { DetailLine } from '../pages/detail-line/detail-line';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -18,7 +19,8 @@ import {IonicStorageModule} from '@ionic/storage';
     MyApp,
     HomePage,
     ListPage,
-    Ligne
+    Ligne,
+    DetailLine
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import {IonicStorageModule} from '@ionic/storage';
     MyApp,
     HomePage,
     ListPage,
-    Ligne
+    Ligne,
+    DetailLine
   ],
   providers: [
     StatusBar,

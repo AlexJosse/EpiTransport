@@ -78,6 +78,14 @@ export class NavitiaService{
         ).map((res: Response) => res.json());
     }
 
+    getCoverageLine(place: string, id: string){
+        this.refreshHeaders();
+        return this.http.get(
+            this.apiUrl + "coverage/" + place + "/stop_areas/" + encodeURIComponent(id) + "/lines/",
+            this.options
+        ).map((res: Response) => res.json());
+    }
+
 
 
 }

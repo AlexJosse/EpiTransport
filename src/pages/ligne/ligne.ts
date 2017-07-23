@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavitiaService } from '../../service/navitia-service';
+import { NavController} from 'ionic-angular';
+import {DetailLine} from '../detail-line/detail-line';
 
 @Component({
   selector: 'page-ligne',
@@ -11,8 +13,10 @@ export class Ligne{
     private coverages: Array<{id: string, name: string}>;
     private coverage:  string;
     private lines: Array<{id: string, numero: string, name: string, type: string}>;
+    private id_coverage: string;
 
-    constructor(private navitia: NavitiaService){
+    constructor(private navitia: NavitiaService,
+                private nav: NavController){
         this.transport = "metro";
         this.coverages = [];
         this.lines = [];
@@ -25,7 +29,6 @@ export class Ligne{
                 data => {
                     this.lines = [];
                     for (let obj of data.lines){
-                       // this.whichIcon("metro " + obj.code);
                         this.lines.push({id: obj.id, numero: obj.code, name: obj.name, type: "metro"});
                     }
                 },
@@ -89,19 +92,19 @@ export class Ligne{
     }
 
     load(){
-        let id: string;
         for (let i = 0; i <= this.coverages.length; i++){
             if (this.coverage == this.coverages[i].name){
-                id = this.coverages[i].id;
+                this.id_coverage = this.coverages[i].id;
                 break;
             }
         }
-        if (!!id){
-            this.displayTransport(this.transport, id);
+        if (!!this.id_coverage){
+            this.displayTransport(this.transport, this.id_coverage);
         }
     }
 
     lineSelected(line): void{
+        this.nav.push(DetailLine, {line: line, coverage: this.id_coverage});
         console.log(line);
         
     }
