@@ -35,7 +35,8 @@
 
      <ion-list no-lines>
       <ion-item *ngFor="let line of lines" (click)="lineSelected(line)">
-        <ion-icon class="{{whichIcon(line)}}" item-start></ion-icon>
+        <ion-icon *ngIf="!!whichIcon(line)" class="{{whichIcon(line)}}" item-start></ion-icon>
+        <ion-icon *ngIf="whichIcon(line) == 'bus'" name="bus" item-start></ion-icon>
         {{line.name}}
       </ion-item> 
     </ion-list>

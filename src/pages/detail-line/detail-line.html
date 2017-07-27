@@ -3,14 +3,21 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Detail de la ligne ...</ion-title>
+    <ion-title>Detail de la ligne</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-list no-lines>
-      <ion-item *ngFor="let root of roots">
-        {{root.name}}
-      </ion-item> 
-    </ion-list>
+
+  <ion-grid>
+    <ion-row *ngFor="let root of roots">
+       <ion-col col-6 class="colu">
+         <h6>{{root.name}}</h6>
+       </ion-col>
+       <ion-col col-6 class="colu">
+
+       </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

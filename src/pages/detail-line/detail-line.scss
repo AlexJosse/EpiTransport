@@ -1,0 +1,17 @@
+page-detail-line{
+     .metro,.tram,.transilien,.rer{
+	position:relative;
+	left:0.2em;
+	display:inline-block;
+	width:$metrosize+0.1em; // Ajout de 0.1em pour éviter les erreurs d'arrondi lorsque les em sont convertis en pixels
+	height:$metrosize+0.1em;// Pareil
+	background-size:95%;
+	background-repeat:no-repeat;
+	text-indent:-5000px; // Cacher le texte Accessible
+    font-size: 20px;
+    }
+
+    .colu{
+        padding-bottom: 30px;
+    }
+}

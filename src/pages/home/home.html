@@ -8,11 +8,60 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+<ion-grid>
+<form [formGroup]="todo">
+  <ion-row>
+    <ion-col col-12>
+      <ion-item>
+      <ion-label floating>départ</ion-label>
+      <ion-input formControlName="depart" [(ngModel)]="depart" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <ion-item>
+    <ion-label floating>arrivée</ion-label>
+    <ion-input formControlName="arrive" [(ngModel)]="arrive" type="text"></ion-input>
+    </ion-item>
+  </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+    <!--  <ion-item>
+          <ion-label>type de voyage</ion-label>
+            <ion-select formControlName="travelerType" [(ngModel)]="travelerType">
+              <ion-option value="physical_mode:RapidTransit">voiture</ion-option>
+              <ion-option value="physical_mode:RapidTransit">vélo / marche</ion-option>
+              <ion-option value="physical_mode:Car">Transport</ion-option>
+              <ion-option value="all">Tout</ion-option>
+            </ion-select>
+    </ion-item>-->
+  </ion-col>
+  </ion-row>
+  <ion-row>
+  <ion-col col-12>
+    <button [disabled]="!todo.valid" ion-button color="light" (click)="searchItenaire()">
+      <ion-icon name="search"></ion-icon>
+    </button>
+  </ion-col>
+  </ion-row>
+</form>
+</ion-grid>
+
+<ion-grid>
+  <ion-row>
+    <ion-col col-12>
+      Départ à {{currentDate}}
+      <ion-item *ngFor="let itineraire of itineraires" no-lines (click)="openModalTrajet(itineraire)">
+        <ng-container *ngFor="let section of itineraire.sections" >
+        <ion-icon *ngIf="!!whichIcon(section)" class="{{whichIcon(section)}}" item-start></ion-icon></ng-container>
+        <ion-icon class="iconh" name="time"item-end>{{itineraire.arriveDate}}</ion-icon>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
 </ion-content>

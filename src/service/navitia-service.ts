@@ -65,15 +65,16 @@ export class NavitiaService{
     getStopPoint(place: string, line: string){
         this.refreshHeaders();
         return this.http.get(
-        this.apiUrl +  "coverage/" + place + "/lines/" + encodeURIComponent(line) + "/stop_points",
+        this.apiUrl +  "coverage/" + place + "/lines/" + encodeURIComponent(line) + "/stop_areas",
         this.options
         ).map((res: Response) => res.json());
     }
 
-    getIteneraire(place: string, to: string, from: string, date: string, datetime: string){
+    getIteneraire(from: string, to: string){//, date: string, datetime: string){
         this.refreshHeaders();
         return this.http.get(
-            this.apiUrl + "coverage/" + place + "/journeys?from=" + encodeURIComponent(from) + "&to=" + encodeURIComponent(to) + "&datetime=" + datetime,
+            this.apiUrl + "journeys?from=" + encodeURIComponent(from) + "&to="
+                                           + encodeURIComponent(to),
             this.options
         ).map((res: Response) => res.json());
     }
@@ -81,7 +82,7 @@ export class NavitiaService{
     getCoverageLine(place: string, id: string){
         this.refreshHeaders();
         return this.http.get(
-            this.apiUrl + "coverage/" + place + "/stop_areas/" + encodeURIComponent(id) + "/lines/",
+            this.apiUrl + "coverage/" + place + "/stop_areas/" + encodeURIComponent(id) + "/lines",
             this.options
         ).map((res: Response) => res.json());
     }

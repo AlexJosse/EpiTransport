@@ -4,9 +4,9 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { Ligne } from '../pages/ligne/ligne';
 import { DetailLine } from '../pages/detail-line/detail-line';
+import { DetailTrajet } from '../modal/detail-trajet/detail-trajet';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -14,26 +14,33 @@ import { NavitiaService } from '../service/navitia-service';
 import {HttpModule} from '@angular/http';
 import {IonicStorageModule} from '@ionic/storage';
 
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     Ligne,
+    DetailTrajet,
     DetailLine
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicStorageModule.forRoot(),
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+            templateUrl: 'build/app.html',
+            config: {
+                mode: 'md'
+            }
+        })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     Ligne,
+    DetailTrajet,
     DetailLine
   ],
   providers: [
@@ -41,6 +48,7 @@ import {IonicStorageModule} from '@ionic/storage';
     Storage,
     SplashScreen,
     NavitiaService,
+    NativeGeocoder,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
