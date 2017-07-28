@@ -10,6 +10,7 @@ import { IconProvider } from '../../providers/icon';
 export class DetailLine{
     private roots: Array<{name: string, area_id: string, lines: Array<any>}>;
     private lines: Array<{name: string, code: string, type: string}>;
+    private rootsTmp: Array<{name: string, area_id: string, lines: Array<any>}>;
 
     constructor(private navitia: NavitiaService,
                 private params: NavParams,
@@ -26,6 +27,12 @@ export class DetailLine{
                                             this.lines.push({name: obj2.name, code: obj2.code, type: obj2.physical_modes[0].name});
                                         }
                                     this.roots.push({name: obj.name, area_id: obj.id, lines: this.lines});
+                                    this.roots.sort((a, b) => {
+                                            if (a.name < b.name) return -1;
+                                            if (a.name > b.name) return 1;
+                                            return 0;
+                                        })
+                                    this.rootsTmp = this.roots;
                                     },
                                     err => {
                                         this.lines.push({name: "null", code: "null", type: "null"});
@@ -36,12 +43,22 @@ export class DetailLine{
                         err => {
                             console.log(err);
                         });
-              /*this.roots.sort((a, b) => {
-                                if (a.name < b.name) return -1;
-                                if (a.name > b.name) return 1;
-                                return 0;
-                            });*/
         }
+    getItems(ev: any) {
+    let val = ev.target.value;
+    if (val == ''){
+        this.roots = this.rootsTmp;
+    }
+    if (val && val.trim() != '') {
+        this.roots = this.rootsTmp.filter((roots) => {
+            return (roots.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
+    }
+
+    onClear() {
+        this.roots = this.rootsTmp; 
+    }
 
     whichIcon(line): string{
             if (line.type == "Train de banlieue / RER"){

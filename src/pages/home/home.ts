@@ -147,7 +147,8 @@ export class HomePage {
 
 
    openModalTrajet(iteneraire) {
-    let modal = this.modalCtrl.create(DetailTrajet, iteneraire);
-    modal.present();
+     this.navCtrl.push(DetailTrajet, iteneraire);
+    //let modal = this.modalCtrl.create(DetailTrajet, iteneraire);
+    //modal.present();
   }
 }

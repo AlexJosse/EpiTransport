@@ -13,7 +13,7 @@ import { ErrorProvider } from '../../providers/errors';
 export class Ligne{
     private transport: string;
     private coverages: Array<{id: string, name: string}>;
-    private coverage:  string;
+    private coverage:  any;
     private lines: Array<{id: string, numero: string, name: string, type: string}>;
     private id_coverage: string;
 
@@ -90,6 +90,8 @@ export class Ligne{
                     if (!!obj.name){
                         this.coverages.push({id: obj.id, name: obj.name});
                     }
+                    
+                    this.coverage = "France - Île-de-France";
                 }
             },
             err => {
