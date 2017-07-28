@@ -1,1 +1,1 @@
-*.rb linguist-language=Java
+*.rb *.scss *.css linguist-language=Java
