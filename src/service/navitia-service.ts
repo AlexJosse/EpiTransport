@@ -32,7 +32,7 @@ export class NavitiaService{
     getListBus(place: string){
         this.refreshHeaders();
          return this.http.get(
-            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:Bus") +"/lines",
+            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:Bus") +"/lines" + "/?count=300&",
             this.options
         ).map((res: Response) => res.json());
     }
@@ -40,7 +40,7 @@ export class NavitiaService{
     getListSubway(place: string){
         this.refreshHeaders();
          return this.http.get(
-            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:Metro") +"/lines",
+            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:Metro") +"/lines" + "/?count=300&",
             this.options
         ).map((res: Response) => res.json());
     }
@@ -48,7 +48,7 @@ export class NavitiaService{
     getListStreetCar(place: string){
         this.refreshHeaders();
         return this.http.get(
-            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:Tramway") +"/lines",
+            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:Tramway") +"/lines" + "/?count=300&",
             this.options
         ).map((res: Response) => res.json());
 
@@ -57,7 +57,7 @@ export class NavitiaService{
     getListTrain(place: string){
         this.refreshHeaders();
          return this.http.get(
-            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:RapidTransit") +"/lines",
+            this.apiUrl + "coverage/" + place + "/physical_modes/" + encodeURIComponent("physical_mode:RapidTransit") +"/lines" + "/?count=300&",
             this.options
         ).map((res: Response) => res.json());
     }
@@ -65,16 +65,17 @@ export class NavitiaService{
     getStopPoint(place: string, line: string){
         this.refreshHeaders();
         return this.http.get(
-        this.apiUrl +  "coverage/" + place + "/lines/" + encodeURIComponent(line) + "/stop_areas",
+        this.apiUrl +  "coverage/" + place + "/lines/" + encodeURIComponent(line) + "/stop_areas" + "/?count=80&",
         this.options
         ).map((res: Response) => res.json());
     }
 
-    getIteneraire(from: string, to: string){//, date: string, datetime: string){
+    getIteneraire(from: string, to: string, datetime: string){//, date: string, datetime: string){
         this.refreshHeaders();
         return this.http.get(
             this.apiUrl + "journeys?from=" + encodeURIComponent(from) + "&to="
-                                           + encodeURIComponent(to),
+                                           + encodeURIComponent(to)
+                                           + "&datetime=" + encodeURIComponent(datetime),
             this.options
         ).map((res: Response) => res.json());
     }

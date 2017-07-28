@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavitiaService } from '../../service/navitia-service';
-import { NavController, NavParams } from 'ionic-angular';
-
+import { NavParams } from 'ionic-angular';
+import { IconProvider } from '../../providers/icon';
 @Component({
   selector: 'page-detail-line',
   templateUrl: 'detail-line.html'
@@ -11,9 +11,9 @@ export class DetailLine{
     private roots: Array<{name: string, area_id: string, lines: Array<any>}>;
     private lines: Array<{name: string, code: string, type: string}>;
 
-    constructor(private nav: NavController,
-                private navitia: NavitiaService,
-                private params: NavParams){
+    constructor(private navitia: NavitiaService,
+                private params: NavParams,
+                private iconProvider: IconProvider){
                     this.roots = [];
                     this.lines = [];
                     this.navitia.getStopPoint(this.params.data.coverage, this.params.data.line.id).subscribe(
@@ -32,16 +32,27 @@ export class DetailLine{
                                         console.log(err);
                                     });
                             }
-                            /*this.roots.sort((a, b) => {
-                                if (a.name < b.name) return -1;
-                                if (a.name > b.name) return 1;
-                                return 0;
-                            });*/
                         },
                         err => {
                             console.log(err);
                         });
-                        console.log(this.roots);
-            }
+              /*this.roots.sort((a, b) => {
+                                if (a.name < b.name) return -1;
+                                if (a.name > b.name) return 1;
+                                return 0;
+                            });*/
+        }
 
+    whichIcon(line): string{
+            if (line.type == "Train de banlieue / RER"){
+              return this.iconProvider.iconRerExist("rer ligne" + line.code);
+            }
+            else if (line.type == "Métro"){
+              return this.iconProvider.iconSubwayExist("metro ligne" + line.code.toLowerCase());
+            }
+            else if (line.type == "Tramway"){
+              return this.iconProvider.iconTramExist("tram ligne" + line.code.toLowerCase());
+            }
+      return null;
+    }
 }

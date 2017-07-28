@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title  class="titre">Itineraires</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
 
 <ion-grid>
 <form [formGroup]="todo">
-  <ion-row>
+  <ion-row align-items-center>
     <ion-col col-12>
       <ion-item>
       <ion-label floating>départ</ion-label>
@@ -43,7 +43,7 @@
   </ion-row>
   <ion-row>
   <ion-col col-12>
-    <button [disabled]="!todo.valid" ion-button color="light" (click)="searchItenaire()">
+    <button  [disabled]="!todo.valid" ion-button color="light" (click)="searchItenaire()">
       <ion-icon name="search"></ion-icon>
     </button>
   </ion-col>
@@ -53,8 +53,20 @@
 
 <ion-grid>
   <ion-row>
+    <ion-col col-8>
+      <ion-item>
+        <ion-label>Départ le </ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY" pickerFormat="h mm A" [(ngModel)]="event.dateStart"></ion-datetime>
+      </ion-item>
+    </ion-col>
+    <ion-col col-4>
+      <ion-item>    
+        <ion-label>à </ion-label>
+        <ion-datetime displayFormat="h:mm" pickerFormat="h mm A" [(ngModel)]="event.timeStart"></ion-datetime>
+      </ion-item>
+    </ion-col>
     <ion-col col-12>
-      Départ à {{currentDate}}
+      <!--Départ à {{currentDate}}-->
       <ion-item *ngFor="let itineraire of itineraires" no-lines (click)="openModalTrajet(itineraire)">
         <ng-container *ngFor="let section of itineraire.sections" >
         <ion-icon *ngIf="!!whichIcon(section)" class="{{whichIcon(section)}}" item-start></ion-icon></ng-container>

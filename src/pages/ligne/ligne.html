@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Lignes</ion-title>
+    <ion-title  class="titre">Lignes</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -27,11 +27,9 @@
             </ion-select>
         </ion-item>
     </ion-list>
-     <button (click)="load()">
+     <button ion-button color="light"  (click)="load()">
       <ion-icon name="search"></ion-icon>
-     </button><!--
-     <span class="metro symbole">Ligne J</span>
--->
+     </button>
 
      <ion-list no-lines>
       <ion-item *ngFor="let line of lines" (click)="lineSelected(line)">

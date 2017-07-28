@@ -4,6 +4,8 @@ import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResul
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavitiaService } from '../../service/navitia-service';
 import { DetailTrajet } from '../../modal/detail-trajet/detail-trajet';
+import { IconProvider } from '../../providers/icon';
+import { ErrorProvider } from '../../providers/errors';
 
 @Component({
   selector: 'page-home',
@@ -21,13 +23,20 @@ export class HomePage {
   private lines: Array<string>;
   private dateArrive: string;
   private currentDate: string;
+  private event : any; 
   
   constructor(public navCtrl: NavController,
               private nativeGeocoder: NativeGeocoder,
               private formBuilder: FormBuilder,
               private navitia: NavitiaService,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private iconProvider: IconProvider,
+              private error: ErrorProvider) {
               this.currentDate = new Date().getHours().toString() + "h"+ new Date().getMinutes().toString() + "min" + new Date().getSeconds().toString() + "sec";
+              this.event = {
+                dateStart: this.getCurrentDate(),
+                timeStart: this.getcurrentTime()
+              };
               this.travelerType = "transport";
               this.itineraires = [];
               this.lines = [];
@@ -44,12 +53,48 @@ export class HomePage {
                 arrive: [this.arrive, Validators.required]
                // travelerType: [this.travelerType, Validators.required]
               });
-              this.lines.push("rer ligneA");
-              this.lines.push("rer ligneB");
-              this.lines.push("rer ligneC");
-              this.lines.push("metro ligne16");
               
             }
+  
+  getCurrentDate(): string{
+    let date = new Date();
+      let result = date.getFullYear().toString() + "-";
+      
+      let month = date.getMonth() + 1;
+      if (month < 10){
+        result += "0" + month.toString() + "-";;
+      }
+      else if (month >= 10){
+        result += month.toString() + "-";;
+      }
+      if (date.getUTCDate() < 10){
+         
+          result += "0" +  date.getUTCDate().toString();
+        }
+      else if (date.getUTCDate() >= 10){
+          result += date.getUTCDate().toString();
+        }
+    return result;
+  }
+
+  getcurrentTime(): string{
+    let time = new Date();
+    let result = "";
+
+    if (time.getHours() < 10){
+      result += '0' + time.getHours().toString() + ":";
+    }
+    else if( time.getHours() >= 10){
+      result += time.getHours().toString() + ":";
+    }
+    if (time.getMinutes() < 10){
+      result += "0" + time.getMinutes().toString();
+    }
+    else if (time.getMinutes() >= 10){
+      result += time.getMinutes().toString();
+    }
+    return result;
+  }
 
   searchItenaire(): void{
     this.itineraires = [];
@@ -57,18 +102,19 @@ export class HomePage {
               .then((coordinates: NativeGeocoderForwardResult) =>  {
                 this.departLL.latitude = coordinates.latitude;
                 this.departLL.longitude =  coordinates.longitude})
-              .catch((error: any) => console.log(error));
+              .catch((error: any) => this.error.error(error));
     this.nativeGeocoder.forwardGeocode(this.arrive)
               .then((coordinates: NativeGeocoderForwardResult) =>{
                 this.arriveLL.latitude = coordinates.latitude;
                 this.arriveLL.longitude = coordinates.longitude})
-              .catch((error: any) => console.log(error));
+              .catch((error: any) => this.error.error(error));
     
     /*this.navitia.getIteneraire(this.departLL.longitude + ";" + this.departLL.latitude, 
                                this.arriveLL.longitude + ";" + this.arriveLL.latitude, this.travelerType).subscribe(*/
     this.itineraires = [];
+    let datetime = this.event.dateStart.replace(/-/g, "") + "T" + this.event.timeStart.replace(/:/g, "");
     this.navitia.getIteneraire("2.302553;48.759255", 
-                               "2.349791;48.884019").subscribe(
+                               "2.349791;48.884019", datetime).subscribe(
                               data => {
                                 this.itineraires = [];
                                 for (let obj of data.journeys){
@@ -80,20 +126,20 @@ export class HomePage {
                               },
                               err => {
                                 this.itineraires = [];
-                                console.log(err);
+                                this.error.error(err);
                               })
   }
 
   whichIcon(section){
     if (section.type == "public_transport"){
       if (section.display_informations.physical_mode == "Train de banlieue / RER"){
-        return this.iconRerExist("rer ligne" + section.display_informations.code);
+        return this.iconProvider.iconRerExist("rer ligne" + section.display_informations.code);
       }
       else if (section.display_informations.physical_mode == "Métro"){
-        return this.iconSubwayExist("metro ligne" + section.display_informations.code.toLowerCase());
+        return this.iconProvider.iconSubwayExist("metro ligne" + section.display_informations.code.toLowerCase());
       }
       else if (section.display_informations.physical_mode == "Tramway"){
-        return this.iconTramExist("tram ligne" + section.display_informations.code.toLowerCase());
+        return this.iconProvider.iconTramExist("tram ligne" + section.display_informations.code.toLowerCase());
       }
     }
     return null;
@@ -104,75 +150,4 @@ export class HomePage {
     let modal = this.modalCtrl.create(DetailTrajet, iteneraire);
     modal.present();
   }
-
-   iconTramExist(id: string): string{
-        let exists = [
-            "tram ligne1",
-            "tram ligne2",
-            "tram ligne3a",
-            "tram ligne3b",
-            "tram ligne4",
-            "tram ligne5",
-            "tram ligne6",
-            "tram ligne7",
-            "tram ligne8",
-            "tram ligne9",
-            "tram ligne10"];
-        for (let i = 0; i < exists.length; i++){
-            if (exists[i] == id){
-                return id;
-            }
-        }
-        return "tram symbole";
-    }
-
-    iconSubwayExist(id: string){
-        let exists = [
-            "metro ligne1",
-            "metro ligne2",
-            "metro ligne3",
-            "metro ligne3b",
-            "metro ligne4",
-            "metro ligne5",
-            "metro ligne6",
-            "metro ligne7",
-            "metro ligne7b",
-            "metro ligne8",
-            "metro ligne9",
-            "metro ligne10",
-            "metro ligne11",
-            "metro ligne12",
-            "metro ligne13",
-            "metro ligne14",
-            "metro ligne15",
-            "metro ligne16",
-            "metro ligne17",
-            "metro ligne18",
-        ];
-
-        for (let i = 0; i < exists.length; i++){
-            if (exists[i] == id){
-                return id
-            }
-        }
-        return "metro symbole";
-    }
-
-    iconRerExist(id: string){
-        let exists = [
-            "rer ligneA",
-            "rer ligneB",
-            "rer ligneC",
-            "rer ligneD",
-            "rer ligneE"
-        ];
-
-        for (let i = 0; i < exists.length; i++){
-            if (exists[i] == id){
-                return id
-            }
-        }
-        return "rer symbole";
-    }
-
 }
