@@ -19,14 +19,19 @@ npm install
 ```
 ionic serve -w chrome (launch on locahost:XXXX)
 ```
+### Build APK de debug
+apk de debug dispo dans le répertoir apk
 
 ### Build APK
 * For android signed :
+     * ionic platform add android
      * ionic build android --release
      * ionic buid android
 * For IOS signed:
+     * ionic platform add ios
      * ionic build ios --release
      * ionic build ios
+
 
 ### Screenshoots 
 > Accceuil 
