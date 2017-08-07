@@ -1,2 +1,6 @@
 src/theme/* linguist-vendored
-src/* linguist-vendored
+/src/pages/detail-line/detail-line.scss  linguist-vendored
+/src/pages/home/home.scss  linguist-vendored
+/src/pages/isochrones/isochrones.scss  linguist-vendored
+/src/pages/ligne/ligne.scss  linguist-vendored
+/src/pages/list/list.scss  linguist-vendored
