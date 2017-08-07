@@ -1,1 +1,2 @@
-*.rb *.scss *.css linguist-language=Java
+src/theme/* linguist-vendored=false
+*.css linguist-language=TypeScript
