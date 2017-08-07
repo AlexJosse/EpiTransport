@@ -1,2 +1,2 @@
-src/theme/* linguist-vendored=false
-*.css linguist-language=TypeScript
+src/theme/* linguist-vendored
+src/* linguist-vendored
